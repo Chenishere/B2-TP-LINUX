@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  forum:
+    image: forum
+    restart: always
+    ports:
+      - '8888:8080'
