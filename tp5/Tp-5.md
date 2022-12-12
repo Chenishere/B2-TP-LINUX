@@ -22,67 +22,64 @@ Une fois le service executé, on à accès au serveur et jouer à Minecraft !
 
 
 ### Mise en place de la solution
-port : 25565 mc -> 25575
-node app.js 
+Pour mettre en place me service nous avons créé un script, pour l'executer, il suffit de lancer la commande suivante :
+```bash
+bash script
+```
+![alt text](https://miro.medium.com/max/688/1*aqOwM4T47u7riL32Fn235Q.png)
+
+Voici le repo dans lequel vous pouvez avoir accès au code de notre api   
+https://github.com/Ciremy/express-docker
+
 
 
 ### Maîtrise de la solution
 
 Une fois en place, posez-vous les questions pour comprendre ce qui a été mis en place, plus en détail. Réfléchissez avec les outils et concepts qu'on a vus en cours :
 
-- y a-t-il un fichier de conf ?
-- combien de programmes y a-t-il ?
-  - et donc quels processus ?
-  - sous quelle identité, quel user, tournent chacun de ces processus ?
-- où sont stockées les données de l'application ?
-  - dans quel dossier ?
-  - y a-t-il une base de données ?
-- sur quel(s) port(s) écoute la solution ?
-- comment on gère le sycle de vie de l'app ?
-  - c'est un service ? un conteneur ? autre chose ?
-  - où sont les logs ?
+- combien de programmes y a-t-il ?  
+-> Notre service dispose d'un seul programme, Docker et une api
+  - sous quelle identité, quel user, tournent chacun de ces processus ?  
+-> Pour le processus docker, l'identité du user est "docker"
+- sur quel(s) port(s) écoute la solution ?  
+-> Les ports qui écoutent la solution sont du port 25565 jusqu’au port 25575
+- comment on gère le sycle de vie de l'app ?  
+-> Une fois que l'on arrete un processus, il meurt.
+
 - l'architecture et/ou la conf de la solution respectent-elles les bonnes pratiques élémentaires ?
-  - un service par machine (ou un service par conteneur)
-  - base de données sur une machine dédiée
   - gestion correcte des utilisateurs et des permissions
+-> Oui, le user à pour seul accès le docker 
 
 ### Amélioration de la solution
 
-Cette partie dépendra beaucoup de la solution que vous avez retenu. Pensez comme au TP3.
+↓  ↓ Afin d’améliorer le service, nous avons ajouté différentes routes à notre API ↓  ↓
 
-Chaque brique peut-être améliorée, d'un point de vue sécurité, performances, ou facilité la maintenabilité. 
 
-Quelques exemples :
+les routes :
 
-- redondance
-   - réplication de base de données
-   - répartition de charges entre deux serveurs applicatifs
-     - par ex, deux serveurs web pour accueillir 2x plus de clients sur un site web
-- sécurité d'accès
-  - mise en place d'un HTTPS pour un site web
-- performances
-  - ne pas utiliser les serveurs web des langages, mais préférer un serveur web dédié
-  - préférez un php-fpm qu'un php géré par la machine
-- autres, dépendant de la solution choisie
+```bash
+get /launch
+````
+Cette commande lance un conteneur.
 
-On pensera aussi, en plus de l'amélioration de chaque brique, au maintien en conditions opérationelles, notamment :
+```bash
+post /close
+```
+Cette commande permet de recevoir un objet {"server": "number"} et ferme le conteneur correspondant. 
 
-- monitoring + alerting
-- sauvegarde + test de restauration
-- documentation (ça, c'est votre compte-rendu)
+```bash
+get /closeAll
+```
+Cette commande ferme tout les conteneurs.
 
-## Rendu attendu
+```bash
+get /purge
+```
+Cette commande permet purger les data.   
 
-Vous livrerez dans un dossier dédié, dans le dépôt git de rendu habituel :
 
-- une documentation d'installation
-  - format Markdown
-  - c'est l'ensemble des opérations à réaliser pour mettre en place votre solution
-    - la suite des commandes donc
-    - mais pas que, suivant vos sujets
-  - vous livrerez aussi les fichiers nécessaires à la mise en place
-    - fichiers de conf
-    - `docker-compose.yml`
-    - etc.
+Voila, votre service de serveur minecraft est maintenant à portée de main  
+![alt text](https://miro.medium.com/max/415/1*JS8H0spN34TK4LXVQAWUdQ.png)
+
 
 
